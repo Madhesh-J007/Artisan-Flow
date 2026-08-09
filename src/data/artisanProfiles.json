@@ -1,0 +1,38 @@
+[
+  {
+    "id": "artisan001",
+    "name": "Meenakshi",
+    "craft": "pottery",
+    "product": "hand-painted terracotta pots and decor items",
+    "productKeywords": ["terracotta", "pottery", "hand-painted", "decor"],
+    "productionCostPerUnit": 120,
+    "weeklyCapacityUnits": 40,
+    "location": "Madurai",
+    "languagePreference": "Tamil",
+    "yearsExperience": 10
+  },
+  {
+    "id": "artisan002",
+    "name": "Kamala",
+    "craft": "weaving",
+    "product": "handloom cotton sarees with natural dye",
+    "productKeywords": ["handloom", "cotton", "saree", "natural dye"],
+    "productionCostPerUnit": 450,
+    "weeklyCapacityUnits": 6,
+    "location": "Madurai",
+    "languagePreference": "Tamil",
+    "yearsExperience": 15
+  },
+  {
+    "id": "artisan003",
+    "name": "Selvi",
+    "craft": "bamboo craft",
+    "product": "bamboo baskets and eco-friendly kitchenware",
+    "productKeywords": ["bamboo", "basket", "eco-friendly", "kitchenware"],
+    "productionCostPerUnit": 90,
+    "weeklyCapacityUnits": 25,
+    "location": "Chennai",
+    "languagePreference": "Tamil-English",
+    "yearsExperience": 7
+  }
+]
