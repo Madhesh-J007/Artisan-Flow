@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Eyebrow, BtnPrimary, BtnGhost } from "./UI.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import VoiceIntake from "./VoiceIntake.jsx";
 
 export default function AuthScreen() {
   const { login, register } = useAuth();
@@ -11,6 +12,7 @@ export default function AuthScreen() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [showVoiceDemo, setShowVoiceDemo] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -42,6 +44,28 @@ export default function AuthScreen() {
     }
   }
 
+  // Standalone preview of the voice/TTS/ASR flow, reachable with no login at
+  // all. This exists because the demo-login accounts already have a complete
+  // profile, so a reviewer who only clicks "View as Artisan" would otherwise
+  // skip straight to the dashboard and never see the flagship voice feature.
+  if (showVoiceDemo) {
+    return (
+      <div className="h-full flex flex-col">
+        <div className="px-7 pt-5">
+          <button onClick={() => setShowVoiceDemo(false)} className="text-xs text-ivoryDim underline">
+            ← Back to login
+          </button>
+        </div>
+        <VoiceIntake
+          userName="Demo"
+          onConfirm={() => {
+            setShowVoiceDemo(false);
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="p-7 pt-14 pb-24 animate-fade-in">
       <div className="text-center mb-6">
@@ -60,9 +84,19 @@ export default function AuthScreen() {
         <div className="text-[11px] tracking-[0.1em] uppercase text-brass font-semibold mb-2.5">
           Reviewing this project?
         </div>
+
+        <button
+          type="button"
+          onClick={() => setShowVoiceDemo(true)}
+          className="w-full mb-3 py-3 rounded-lg bg-brass text-bg text-xs font-bold flex items-center justify-center gap-2"
+        >
+          🎙️ Try the voice + TTS demo first — no login needed
+        </button>
+
         <p className="text-xs text-ivoryDim mb-3">
-          Skip registration and log straight into a populated demo account with existing
-          profiles, matches, and requests already in place.
+          Or skip straight into a populated account with existing profiles, matches, and
+          requests already in place (this skips the voice intake, since these accounts already
+          have a saved profile):
         </p>
         <div className="flex gap-2">
           <button

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Eyebrow, SpeakButton } from "./UI.jsx";
+import { Eyebrow, SpeakButton, speakText } from "./UI.jsx";
 import { AGENT_QUESTIONS } from "../data/agentQuestions.js";
 import { useProfileExtraction } from "../hooks/useProfileExtraction.js";
 import ProfileConfirmCard from "./ProfileConfirmCard.jsx";
@@ -147,13 +147,15 @@ export default function VoiceIntake({ userName, onConfirm }) {
   useEffect(() => {
     if (!preset) return;
     const first = conversation[0];
+    const greetingTamil = `வணக்கம் ${userName}! ` + first.agentTamil.replace("வணக்கம்! ", "");
     setMessages([
       {
         speaker: "agent",
-        tamil: `வணக்கம் ${userName}! ` + first.agentTamil.replace("வணக்கம்! ", ""),
+        tamil: greetingTamil,
         en: `Hi ${userName}! ` + first.agentEn.replace("Hi! ", "")
       }
     ]);
+    speakText(greetingTamil);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userName, preset]);
 
@@ -197,6 +199,7 @@ export default function VoiceIntake({ userName, onConfirm }) {
       setTimeout(() => {
         const next = conversation[nextIndex];
         setMessages(prev => [...prev, { speaker: "agent", tamil: next.agentTamil, en: next.agentEn }]);
+        speakText(next.agentTamil);
         setStepIndex(nextIndex);
         setAwaitingTap(true);
       }, 500);

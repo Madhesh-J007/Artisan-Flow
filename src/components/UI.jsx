@@ -147,6 +147,33 @@ function pickBestVoice(voices, preferredLangPrefix) {
 }
 
 /**
+ * Standalone speak function, usable outside the button (e.g. auto-playing
+ * the agent's question as soon as it appears, so voice output is something
+ * the person *hears* by default rather than something they have to remember
+ * to tap). Returns a promise that resolves when speech ends, so callers can
+ * sequence things if needed.
+ */
+export function speakText(text, lang = "ta-IN") {
+  return new Promise(resolve => {
+    if (!window.speechSynthesis || !text) {
+      resolve();
+      return;
+    }
+    loadVoices().then(voices => {
+      const voice = pickBestVoice(voices, lang.split("-")[0].toLowerCase());
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = voice?.lang || lang;
+      if (voice) utterance.voice = voice;
+      utterance.rate = 0.95;
+      utterance.onend = resolve;
+      utterance.onerror = resolve;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    });
+  });
+}
+
+/**
  * Speaker button for reading text aloud. Defaults to Tamil (ta-IN); if no
  * Tamil voice is installed on the device, it falls back to whatever voice is
  * available and says so via the `lang` it ends up using — this is a real

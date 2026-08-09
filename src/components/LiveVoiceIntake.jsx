@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Eyebrow, SpeakButton } from "./UI.jsx";
+import { Eyebrow, SpeakButton, speakText } from "./UI.jsx";
 import { AGENT_QUESTIONS } from "../data/agentQuestions.js";
 import { useProfileExtraction } from "../hooks/useProfileExtraction.js";
 import ProfileConfirmCard from "./ProfileConfirmCard.jsx";
